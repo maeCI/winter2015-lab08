@@ -5,7 +5,7 @@
  *
  * @author maecst
  */
-class Users extends CI_Model {
+class Users extends MY_Model {
   
    // Constructor
    public function __construct() 
