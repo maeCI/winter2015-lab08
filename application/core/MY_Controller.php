@@ -31,8 +31,8 @@ class Application extends CI_Controller {
      * Render this page
      */
     function render() {
-        $this->data['menubar'] = $this->parser->parse('_menubar', $this->config->item('menu_choices'),true);
-        // $this->data['menubar'] = $this->makemenu();
+        //$this->data['menubar'] = $this->parser->parse('_menubar', $this->config->item('menu_choices'),true);
+        $this->data['menubar'] = $this->parser->parse('_menubar', $this->makemenu(), true);
         $this->data['content'] = $this->parser->parse($this->data['pagebody'], $this->data, true);
 
         // finally, build the browser page!
@@ -52,29 +52,45 @@ class Application extends CI_Controller {
                     return;
                 }
                 
-            } else if ($userRole != roleNeeded) {
+            } else if ($userRole != $roleNeeded) {
                     redirect('/');
                     return;            
             }     
         }
     }
     
-    private function makemenu() {
+    private function makemenu() {        
         // get role & name from session
         $userRole = $this->session->userdata('userRole');
         $userName = $this->session->userdata('userName');
         
         // make array, with menu choice for alpha
-        $menudata = array('name' => 'Alpha', 'link' => '/alpaha');
+        $menu_choices = array();
+        $menudata[] = array('name' => 'Alpha', 'link' => '/alpha');
         
         // if not logged in, add menu choice to login
+        if ($userRole == null) {
+            $menudata[] = array('name' => 'Login', 'link' => '/auth');
+            
+        } else {
         
-        // if user, add menu choice for beta and logout
-        
-        // if admin, add menu choices for beta, gamma, and logout
-        
+            // if user, add menu choice for beta and logout
+            if ($userRole == ROLE_USER || $userRole == ROLE_ADMIN) {
+                $menudata[] = array('name' => 'Beta', 'link' => '/beta');
+            }
+
+            // if admin, add menu choices for beta, gamma, and logout
+            if ($userRole == ROLE_ADMIN) {
+                $menudata[] = array('name' => 'Gamma', 'link' => '/auth/gamma');
+            }
+            
+            $menudata[] = array('name' => 'Logout', 'link' => '/auth/logout');
+            $menudata[] = array('name' => '*~*~*~* <strong> Welcome ' . $userName . '! </strong> *~*~*~*', 'link' => '#');
+        }
+
         // return the choices array
-        
+        $menu_choices['menudata'] = $menudata;
+        return $menu_choices;
     }
 
 }

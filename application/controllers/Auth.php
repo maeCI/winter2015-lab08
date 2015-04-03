@@ -47,6 +47,6 @@ class Auth extends Application {
         
         $this->session->sess_destroy();
         echo 'logging out...';
-        //redirect('/');
+        redirect('/');
     }
 }
