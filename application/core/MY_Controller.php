@@ -32,6 +32,7 @@ class Application extends CI_Controller {
      */
     function render() {
         $this->data['menubar'] = $this->parser->parse('_menubar', $this->config->item('menu_choices'),true);
+        // $this->data['menubar'] = $this->makemenu();
         $this->data['content'] = $this->parser->parse($this->data['pagebody'], $this->data, true);
 
         // finally, build the browser page!
@@ -56,6 +57,22 @@ class Application extends CI_Controller {
                     return;            
             }     
         }
+    }
+    
+    private function makemenu() {
+        // get role & name from session
+        $userRole = $this->session->userdata('userRole');
+        
+        // make array, with menu choice for alpha
+        
+        // if not logged in, add menu choice to login
+        
+        // if user, add menu choice for beta and logout
+        
+        // if admin, add menu choices for beta, gamma, and logout
+        
+        // return the choices array
+        
     }
 
 }
