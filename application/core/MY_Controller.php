@@ -41,10 +41,10 @@ class Application extends CI_Controller {
         $this->parser->parse('_template', $this->data);
     }
 
-    function restrict($rollNeeded = null) {
+    function restrict($roleNeeded = null) {
         $userRole = $this->session->userdata('userRole');
 
-        if ($rollNeeded != null) {
+        if ($roleNeeded != null) {
  
             if (is_array($roleNeeded)) {
                 if (!in_array($userRole, $roleNeeded)) {
