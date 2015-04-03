@@ -62,8 +62,10 @@ class Application extends CI_Controller {
     private function makemenu() {
         // get role & name from session
         $userRole = $this->session->userdata('userRole');
+        $userName = $this->session->userdata('userName');
         
         // make array, with menu choice for alpha
+        $menudata = array('name' => 'Alpha', 'link' => '/alpaha');
         
         // if not logged in, add menu choice to login
         
